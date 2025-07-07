@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    #box{
+      width: 300px;
+      height: 250px;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <input type="text" id="dan"/>
+  <button type="button" onclick="test()">확인</button>
+  <div id="box"></div>
+
+  <script>
+    function test() {
+      // 현재 문서에서(document.)아이디가 dan인 요소(element=tag)를 검색하여
+      // 변수 dd에 저장한다.
+      let dd = document.getElementById("dan");
+      //현재문서에서 아이디가 box인 요소를 변수 box에 저장(재사용 하기 위해서)
+      let box = document.getElementById("box");
+      // 검색된 dan의 값을 얻어내어 변수 dan에 저장하자!
+      let dan = dd.value;
+      // console.log("dan:" + dan);
+      let str = dan + "단<br/>";
+      for(let i = 1; i < 10; i++){
+       str += dan + "*" + i + "=" + (dan*i) + "<br/>";
+      }
+      box.innerHTML = str;
+    }
+  </script>
+</body>
+</html>
