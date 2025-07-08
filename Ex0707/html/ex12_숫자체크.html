@@ -14,19 +14,39 @@
 
 <script>
   function checkNumber(str) {
-    return !isNaN(str);
+    // return !isNaN(str);
+    let value = true;
+    //인자로 받은 str안에 문자가 하나라도 있다면 value에 false를 저장한다.
+    for(let i =0; i<str.length; i++){
+      //str의 i번째에 있는 문자의 코드값을 가져온다.
+      let code = str.charCodeAt(i);
+      let ch = str.charAt(i);//문자를 얻어낸다.
+      // if(code < 48 || code >57){//코드값으로 비교
+        if(ch < '0' || ch > '9'){//문자값으로 비교
+          value = false;
+          break;//반복문 탈출
+        }
+    }//for의 끝
+    return value;
   }
   function ex(frm) {
     // 현재날짜를 객체로 구한다.
     let now = new Date();
     let c_Year = now.getFullYear(); // 2025
     console.log(c_Year);
-    let b_year = document.getElementById("b_year");
-    let bb = b_year.value.trim()
+    let b_year = document.getElementById("b_year");// 생년을 입력하는 입력란
+    let bb = b_year.value.trim() //태어난 년도
     if(bb.length > 0){
-      console.log(checkNumber(bb));
-    }else{
+      if(checkNumber(bb)){//나이구하기
+        let age = c_Year -bb;
+        alert(age+"세 입니다.");
+      } else{
+        //문자값이 있는경우
+        alert("숫자만 입력하세요");
+      }
       alert("생년을 입력하세요");
+      b_year.value = "";
+      b_year.focus();
     }
   }
 </script>
