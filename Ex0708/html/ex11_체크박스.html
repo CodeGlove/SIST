@@ -5,216 +5,167 @@
   <title>Title</title>
   <style>
     #table{
-      width: 800px;
+      width: 1000px;
       border-collapse: collapse;
     }
-    #table td{
+    #table td, #table th{
       border: 1px solid #000;
+      padding: 4px;
+      text-align: center;
     }
-    #table thead td{
-      border: none;
-    }
-    .w30{
+    .w80{
       width: 80px;
+    }
+    .w120{
+      width: 120px;
+    }
+    .w150{
+      width: 150px;
     }
   </style>
 </head>
 <body>
-<h2>Group Checkbox연습</h2>
-<table id="table">
-  <caption>그룹체크박스 테이블</caption>
-
-  <tbody>
- <tr>
-   <td>번호</td>
-   <td>이름</td>
-   <td class="w30">
-     <input type="checkbox" id="ch1" name="chk"/>
-   그룹1</td>      <td class="w30">
-   <input type="checkbox" id="ch2" name="chk"/>
- 그룹2</td>      <td class="w30">
-   <input type="checkbox" id="ch3" name="chk"/>
- 그룹3</td>      <td class="w30">
-   <input type="checkbox" id="ch4" name="chk"/>
- 그룹4</td>      <td class="w30">
-   <input type="checkbox" id="ch5" name="chk"/>
- 그룹5</td>
-   <td class="w30">비고</td>
-
- </tr>
-  <tr>
-    <td>1</td>
-    <td>마루치</td>
-    <td class="w30">
-      <input type="checkbox" id="ch6" name="chk"/>
-    </td>      <td class="w30">
-    <input type="checkbox" id="ch7" name="chk"/>
-  </td>      <td class="w30">
-    <input type="checkbox" id="ch1" name="chk"/>
-  </td>      <td class="w30">
-    <input type="checkbox" id="ch1" name="chk"/>
-  </td>      <td class="w30">
-    <input type="checkbox" id="ch1" name="chk"/>
-  </td>
-    <td class="w30"></td>
-  </tr>
- <tr>
-   <td>2</td>
-   <td>이도</td>
-   <td class="w30">
-     <input type="checkbox" id="ch1" name="chk"/>
-   </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>
-   <td class="w30"></td>
- </tr>
- <tr>
-   <td>3</td>
-   <td>일지매</td>
-   <td class="w30">
-     <input type="checkbox" id="ch1" name="chk"/>
-   </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>
-   <td class="w30"></td>
- </tr>
- <tr>
-   <td>4</td>
-   <td>을불</td>
-   <td class="w30">
-     <input type="checkbox" id="ch1" name="chk"/>
-   </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>
-   <td class="w30"></td>
- </tr>
- <tr>
-   <td>5</td>
-   <td>창조리</td>
-   <td class="w30">
-     <input type="checkbox" id="ch1" name="chk"/>
-   </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>
-   <td class="w30"></td>
- </tr>
- <tr>
-   <td>6</td>
-   <td>이순신</td>
-   <td class="w30">
-     <input type="checkbox" id="ch1" name="chk"/>
-   </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>
-   <td class="w30"></td>
- </tr>
- <tr>
-   <td>7</td>
-   <td>송태섭</td>
-   <td class="w30">
-     <input type="checkbox" id="ch1" name="chk"/>
-   </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>      <td class="w30">
-   <input type="checkbox" id="ch1" name="chk"/>
- </td>
-   <td class="w30"></td>
- </tr>
-
-
-  </tbody>
-</table>
+<article id="wrap">
+  <header>
+    <h1>Group Checkbox연습</h1>
+  </header>
+  <div>
+    <table id="table">
+      <caption>그룹체크박스 테이블</caption>
+      <thead>
+      <tr>
+        <th class="w80">번호</th>
+        <th class="w150">이름</th>
+        <th class="w120"><input type="checkbox" id="r0"/><span>그룹1</span></th>
+        <th class="w120"><input type="checkbox" id="r1"/><span>그룹2</span></th>
+        <th class="w120"><input type="checkbox" id="r2"/><span>그룹3</span></th>
+        <th class="w120"><input type="checkbox" id="r3"/><span>그룹4</span></th>
+        <th class="w120"><input type="checkbox" id="r4"/><span>그룹5</span></th>
+        <th>비고</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>1</td>
+        <td>마루치</td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>이도</td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>일지매</td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>을불</td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>창조리</td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>이순신</td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>송태섭</td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td><input type="checkbox" value="1"/></td>
+        <td></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</article>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
+  $(function (){
+    /*
+    $("#r0").click(function (){
+      //각 행의 3번째 td에 있는 체크박스들 선택
+      let ar = $("#table tbody td:nth-child(3)").find(":checkbox");
 
-  $(function () {
-    //id가 all인 요소에 클릭할 때마다 수행하는 이벤트 등록
-    $("#all").on("click", function () {
-      //tbody 안에있는 모든 checkbox들을 검색하여 변수 ar에 저장!
-      let ar = $("#table>tbody").find(":checkbox"); // ar에는 jQuery문법이 들어갔기 때문에 ar은 jQuery다.
-
-      //검색된 체크박스들과 현재 클릭한 all의 상태를 확인하자
-      // console.log(ar.length +":"+this.checked);
+      //배열의 모든 체크박스들의 상태를 r0과 같은 상태로 지정한다.
       ar.prop("checked", this.checked);
+    });
+    $("#r1").click(function (){
+      //각 행의 4번째 td에 있는 체크박스들 선택
+      let ar = $("#table tbody td:nth-child(4)").find(":checkbox");
 
-      //현재 all이라는 체크박스가 선택된 상태면 "선택헤제"로
-      //그렇지 않다면 "전체선택"으로 지정하자!
-      if(this.checked)
-        $(this).next().text("선택해제");
-      else
-        $(this).next().text("전체선택");
+      //배열의 모든 체크박스들의 상태를 r0과 같은 상태로 지정한다.
+      ar.prop("checked", this.checked);
+    });
+    $("#r2").click(function (){
+      //각 행의 5번째 td에 있는 체크박스들 선택
+      let ar = $("#table tbody td:nth-child(5)").find(":checkbox");
+
+      //배열의 모든 체크박스들의 상태를 r0과 같은 상태로 지정한다.
+      ar.prop("checked", this.checked);
+    });
+    */
+
+
+    $("#table thead input:checkbox").click(function (){
+      //console.log("TT");
+      // 클릭한 checkbox의 가장 가까운 태그(상위태그)를 알아낸다.
+      //let p = $(this).parent(); //th
+      let p = $(this).closest("th");// 현재 클릭한 체크박스의 가장 가까운 태그(th)
+
+      // 앞서 구한 부모태그(th)가 해당 행(tr)에서 몇번째 요소인지
+      // 인덱스를 알아내자
+      let idx = $("#table thead tr th").index(p);
+      console.log(idx);
+
+      // 구한 index값을 가지고 tbody에 있는 각 행에서
+      // 해당 idx+1번째에 있는 td안의 체크박스들을 얻어낸다.
+      let ar = $("#table tbody td:nth-child("+(idx+1)+") input:checkbox");
+      ar.prop("checked", this.checked);
     });
 
-    //tbody안에 있는 체크박스들을 클릭했을 때 마다 수행하는 이벤트
-    $("#table>tbody input:checkbox").click(function () {
-      // console.log("체크~");
-      // let ar = $("#table>tbody").find(":checkbox");
-      //
-      // let chk =  true;
-      // for(let i=0; i<ar.length; i++){
-      //   if(!$(ar[i]).is(":checked")){//tbody안에 있는 체크박스들을
-      //     chk = false;               //하나씩 비교하여 체크가 안되어 있다면
-      //     break;//반복문탈출           //chk의 값을 false로 지정한다.
-      //   }
-      // }//for의 끝
-      // $("#all").prop("checked",chk);
-      // if(chk)
-      //   $("#all").next().text("선택해제");
-      // else
-      //   $("#all").next().text("전체선택");
 
-      //tbody에 있는 체크박스들 중 체크가 되어있는 체크박스들의 수를 구해서
-      //변수 ch_len에 저장하자!
-      //let ch_len = $("#table>tbody").find(":checked").length;//이렇게 해도되고 아래처럼 해도된다.
-      let ch_len = $("#table>tbody input[type=checkbox]:checked").length;//대괄호는 속성을 뜻한다.
-      console.log(ch_len);
-
-      //이제 tbody안에 존재하는 모든 체크박스의 수를 구하자!
-      let len = $("table>tbody input[type=checkbox]").length;
-
-      if(len == ch_len){
-        $("#all").prop("checked", true);
-        $("#all").next().text("선택해제");
-      }else{
-        $("#all").prop("checked", false);
-        $("#all").next().text("전체선택");
-      }
-    });
   });
 </script>
 </body>
