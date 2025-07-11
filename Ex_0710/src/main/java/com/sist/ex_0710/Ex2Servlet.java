@@ -12,18 +12,21 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.util.List;
 
 @WebServlet("/Ex2")
+
 public class Ex2Servlet extends HttpServlet {
     SqlSessionFactory factory;
-
     @Override
     public void init(ServletConfig config) throws ServletException {
+        //MyBatis준비 ------------------------------------------
         try {
-            Reader r = Resources.getResourceAsReader(
-                    "mybatis/config/conf.xml");
+            Reader r = Resources.getResourceAsReader("mybatis/config/conf.xml");
+
             factory = new SqlSessionFactoryBuilder().build(r);
             r.close();
+            //-----------------------------------------------------
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -31,29 +34,31 @@ public class Ex2Servlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //MyBatis를 활용하여 emp테이블의 자원들을 표현하려고 한다.
         //응답시 한글처리
-        response.setContentType("text/html; charset=utf-8");
+        response.setContentType("text/html;charset=utf-8");
 
-        // 파라미터 값 받기
-        String empno = request.getParameter("empno_tx");
-
-        // SQL문을 호출하기 위해 SqlSession이 필요하다
+        //SQL문을 활용하기 위해 SquSession을 얻어낸다.
         SqlSession ss = factory.openSession();
-        EmpVO vo = ss.selectOne("emp.get_emp", empno);
-        StringBuffer sb = new StringBuffer();
+
+        String empno = request.getParameter("empno_tx");
+       EmpVO vo = ss.selectOne("emp.search", empno);
+        StringBuffer sb = new StringBuffer("<ol>");
         if(vo != null) {
-            sb.append("<p>");
-            sb.append(vo.getEmpno());
-            sb.append(",");
-            sb.append(vo.getEname());
-            sb.append(",");
-            sb.append(vo.getJob());
-            sb.append(",");
-            sb.append(vo.getDeptno());
-            sb.append("</p>");
-        }
+           sb.append("<p>");
+           sb.append(vo.getEmpno());
+           sb.append(",");
+           sb.append(vo.getEname());
+           sb.append(",");
+           sb.append(vo.getJob());
+           sb.append(",");
+           sb.append(vo.getDeptno());
+           sb.append("</p>");
+       }
+        sb.append("</ol>");
+        //응답을 위한 스트림 생성
         PrintWriter out = response.getWriter();
-        out.println("<h2>검색 결과</h2><hr/>");
+        out.println("<h2>검색결과</h2>");
         out.println(sb.toString());
         out.close();
         ss.close();

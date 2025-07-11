@@ -22,9 +22,8 @@ public class Ex3Servlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        try {
-            Reader r = Resources.getResourceAsReader(
-                    "mybatis/config/conf.xml");
+        try{
+            Reader r = Resources.getResourceAsReader("mybatis/config/conf.xml");
             factory = new SqlSessionFactoryBuilder().build(r);
             r.close();
         } catch (Exception e) {
@@ -34,35 +33,36 @@ public class Ex3Servlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //요청시 한글처리
+            //요청시 한글처리
         request.setCharacterEncoding("utf-8");
-        
+
         //응답시 한글처리
         response.setContentType("text/html;charset=utf-8");
-        
+
         //파라미터들 받기
         String searchType = request.getParameter("searchType");
         String searchValue = request.getParameter("searchValue");
-        
+
         //emp.search라는 sql문을 호출하기 위해 파라미터들을 Map구조에 담아야 한다.
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String > map = new HashMap<>();
         map.put("searchType", searchType);
         map.put("searchValue", searchValue);
-        
+
         //emp.search라는 sql문을 호출하기 위해 SqlSession을 얻어낸다.
         SqlSession ss = factory.openSession();
-        List<EmpVO> list = ss.selectList("emp.search", map);
-        //------------------------ 요기까지가 중요했어 ------------------
+        List<EmpVO> list = ss.selectList("emp.search1", map);
+        //-------------------------------요기까지가 중요했다.
+
         StringBuffer sb = new StringBuffer("<ol>");
-        for(EmpVO vo : list){
+        for (EmpVO vo: list){
             sb.append("<li>");
-            sb.append(vo.getEmpno()); //사번
+            sb.append(vo.getEmpno());
             sb.append(",");
-            sb.append(vo.getEname()); //이름
+            sb.append(vo.getEname());
             sb.append(",");
-            sb.append(vo.getJob()); //직종
+            sb.append(vo.getJob());
             sb.append(",");
-            sb.append(vo.getDeptno()); //부서코드
+            sb.append(vo.getDeptno());
             sb.append("</li>");
         }//for의 끝
         sb.append("</ol>");

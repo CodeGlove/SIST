@@ -15,17 +15,18 @@ import java.io.Reader;
 import java.util.List;
 
 @WebServlet("/Ex1")
+
 public class Ex1Servlet extends HttpServlet {
-    SqlSessionFactory factory;// ***********
+    SqlSessionFactory factory;
     @Override
     public void init(ServletConfig config) throws ServletException {
+        //MyBatis준비 ------------------------------------------
         try {
-            // MyBatis준비 -----------------------------------------------------
-            Reader r = Resources.getResourceAsReader(
-                    "mybatis/config/conf.xml");
+            Reader r = Resources.getResourceAsReader("mybatis/config/conf.xml");
+
             factory = new SqlSessionFactoryBuilder().build(r);
             r.close();
-            //------------------------------------------------------------------
+            //-----------------------------------------------------
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,24 +34,24 @@ public class Ex1Servlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // MyBatis를 활용하여 emp테이블의 자원들을 표현하려고 한다.
-        // 응답시 한글처리
+            //MyBatis를 활용하여 emp테이블의 자원들을 표현하려고 한다.
+            //응답시 한글처리
         response.setContentType("text/html;charset=utf-8");
 
-        // SQl문을 활용하기 위해 SqlSession을 얻어낸다.
+        //SQL문을 활용하기 위해 SquSession을 얻어낸다.
         SqlSession ss = factory.openSession();
         List<EmpVO> list = ss.selectList("emp.all");
 
         StringBuffer sb = new StringBuffer("<ol>");
-        for(EmpVO vo : list){
+        for (EmpVO vo: list){
             sb.append("<li>");
-            sb.append(vo.getEmpno()); //사번
+            sb.append(vo.getEmpno());
             sb.append(",");
-            sb.append(vo.getEname()); //이름
+            sb.append(vo.getEname());
             sb.append(",");
-            sb.append(vo.getJob()); //직종
+            sb.append(vo.getJob());
             sb.append(",");
-            sb.append(vo.getDeptno()); //부서코드
+            sb.append(vo.getDeptno());
             sb.append("</li>");
         }//for의 끝
         sb.append("</ol>");
@@ -66,6 +67,6 @@ public class Ex1Servlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+            doGet(request, response);
     }
 }
