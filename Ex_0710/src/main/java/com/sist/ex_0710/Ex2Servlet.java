@@ -37,12 +37,13 @@ public class Ex2Servlet extends HttpServlet {
         //MyBatis를 활용하여 emp테이블의 자원들을 표현하려고 한다.
         //응답시 한글처리
         response.setContentType("text/html;charset=utf-8");
-
+        response.setContentType("text/html;charset=utf-8");
         //SQL문을 활용하기 위해 SquSession을 얻어낸다.
         SqlSession ss = factory.openSession();
 
+
         String empno = request.getParameter("empno_tx");
-       EmpVO vo = ss.selectOne("emp.search", empno);
+        EmpVO vo = ss.selectOne("emp.search", empno);
         StringBuffer sb = new StringBuffer("<ol>");
         if(vo != null) {
            sb.append("<p>");

@@ -1,4 +1,4 @@
-package com.sist.ex_0710;
+package review.java
 
 import mybatis.vo.EmpVO;
 import org.apache.ibatis.io.Resources;
@@ -34,30 +34,18 @@ public class Ex1Servlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            //MyBatis를 활용하여 emp테이블의 자원들을 표현하려고 한다.
-            //응답시 한글처리
+        //MyBatis를 활용하여 emp테이블의 자원들을 표현하려고 한다.
+        //응답시 한글처리
         response.setContentType("text/html;charset=utf-8");
 
         //SQL문을 활용하기 위해 SquSession을 얻어낸다.
         SqlSession ss = factory.openSession();
         List<EmpVO> list = ss.selectList("emp.all");
 
-        StringBuffer sb = new StringBuffer("<ol>");
-        for (EmpVO vo: list){
-            sb.append("<li>");
-            sb.append(vo.getEmpno());
-            sb.append(",");
-            sb.append(vo.getEname());
-            sb.append(",");
-            sb.append(vo.getJob());
-            sb.append(",");
-            sb.append(vo.getDeptno());
-            sb.append("</li>");
-        }
-                sb.append("</ol>");
 
 
-        PrintWriter out = response.getWriter();//응답을 위한 스트림 생성
+        //응답을 위한 스트림 생성
+        PrintWriter out = response.getWriter();
         out.println("<h2>전체사원 목록</h2>");
         out.println("<hr/>");
         out.println(sb.toString());
@@ -68,6 +56,6 @@ public class Ex1Servlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            doGet(request, response);
+        doGet(request, response);
     }
 }
