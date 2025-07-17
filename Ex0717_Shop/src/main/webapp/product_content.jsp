@@ -14,13 +14,14 @@
     </header>
 
     <article>
-        <jsp:useBean id="sb" class="shop.bean.ShopBean" scope="session"/> <!-- id, class, scope 모두 같아야 재사용한다. 하나라도 다르면 새로 만든다. -->
-        <jsp:setProperty name="sb" property="*"/>  <!-- parameter와 property가 다르면 property 뒤에 param="파라미터이름" 을 적어주면 된다. -->
-
-        <%
-            ProductVO vo = sb.getProduct();
-        %>
-        <table>
+        <jsp:useBean id="sb" class="shop.bean.ShopBean" scope="session"/>
+        <jsp:setProperty name="sb" property="p_num" param="prod_num"/>
+<%
+    //위에서 파라미터로 넘어오는 제품번호를 ShopBean의 p_num에 저장시킨 상태다.
+    //여기서 ShopBean의 기능 중 특정 제품을 검색하는 함수가 있다.
+    ProductVO pvo = sb.getProduct();
+%>
+        <table class="table">
             <colgroup>
                 <col width="40%">
                 <col width="60%">
@@ -28,43 +29,44 @@
             <tbody>
             <tr>
                 <td>제품Category</td>
-                <td></td>
+                <td><%=pvo.getCategory()%></td>
             </tr>
             <tr>
                 <td>제품번호</td>
-                <td></td>
+                <td><%=pvo.getP_num()%></td>
             </tr>
             <tr>
                 <td>제품이름</td>
-                <td></td>
+                <td><%=pvo.getP_name()%></td>
             </tr>
             <tr>
                 <td>제품 판매사</td>
-                <td></td>
+                <td><%=pvo.getP_company()%></td>
             </tr>
             <tr>
                 <td>제품가격</td>
-                <td>(할인가 :<%=vo.getP_price()%>  )</td>
+                <td>(할인가 : <%=pvo.getP_saleprice()%>원 )</td>
             </tr>
             <tr>
                 <td colspan="2">제품설명</td>
             </tr>
             <tr>
-                <td colspan="2" align="center"><img src ="images/" width="100" height="95"></td>
+                <td colspan="2" align="center"><img src ="images/<%=pvo.getP_image_l()%>"></td>
             </tr>
             <tr>
-                <td colspan="2"></td>
+                <td colspan="2"><%=pvo.getP_content()%></td>
             </tr>
             <tr>
                 <td colspan="2" align="center">
                     <input type="button" value="장바구니에 담기"
-                           onclick="javascript:location.href='addProduct.jsp?p_num='"/>
+                           onclick="javascript:location.href='addProduct.jsp?p_num=<%=pvo.getP_num()%>'"/>
                     <input type="button" value="장바구니 보기"
                            onclick="javascript:location.href='cartList.jsp'"/>
                 </td>
             </tr>
             </tbody>
         </table>
+
     </article>
 </div>
 </body>
