@@ -11,7 +11,6 @@ public class AllAction implements Action{
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         EmpVO[] ar = EmpDAO.getAll();
         request.setAttribute("ar", ar);
-        System.out.println(ar.length+"::::");
         return "jsp/all.jsp";
     }
 }

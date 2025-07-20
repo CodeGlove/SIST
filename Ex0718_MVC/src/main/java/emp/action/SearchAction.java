@@ -5,14 +5,23 @@ import mybatis.vo.EmpVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SearchAction implements Action{
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        EmpVO[] ar = EmpDAO.getAll();
+
+        String searchType = request.getParameter("searchType");
+        String searchValue = request.getParameter("searchValue");
+        System.out.println("searchType:"+searchType);
+        System.out.println("searchValue:"+searchValue);
+        Map<String, String> map = new HashMap<>();
+        map.put("searchType", searchType);
+        map.put("searchValue", searchValue);
+        EmpVO[] ar = EmpDAO.search(map);
         request.setAttribute("ar", ar);
-        System.out.println(ar.length+"::::");
-        return "jsp/all.jsp";
+        return "jsp/search.jsp";
     }
 }

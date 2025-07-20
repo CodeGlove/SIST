@@ -23,7 +23,6 @@
 <body>
 
 <div id="search_dig">
-    <form action="/Ex3" method="post" name="frm">
         <table>
             <caption>검색 테이블</caption>
             <tbody>
@@ -32,8 +31,10 @@
                     <select id="searchType" name="searchType">
                         <option value="0">사번</option>
                         <option value="1">이름</option>
-                        <option value="2">직종코드</option>
-                        <option value="3">부서</option>
+                        <option value="2">직종</option>
+                        <option value="3">급여</option>
+                        <option value="4">입사일</option>
+                        <option value="5">부서</option>
                     </select>
                 </td>
                 <td>
@@ -50,7 +51,6 @@
             </tr>
             </tfoot>
         </table>
-    </form>
 </div>
 <div id="wrap">
   <header>
@@ -121,51 +121,32 @@
             title: '사번검색',
             resizable: false
         };
-        $("#empno_dig").dialog(option);
+
         $("#search_dig").dialog(option);
 
-        $("#empno_btn").click(function () {
-            $("#empno_dig").dialog("open");
-        });
-        $("#send_btn").click(function () {
-            let num = $("#empno_tx").val();
-
-            if(num.trim().length == 0){
-                alert("검색할 사번을 입력하세요");
-                // document.getElementById("empno_tx").value ="";
-                $("#empno_tx").val("");
-                $("#empno_tx").focus();
-                return;
-            }
-
-            //대화창의 검색버튼을 클릭했을 때 form을 서버로 보내야 한다.
-            document.ff.submit();
+        $("#search_btn").click(function () {
+            $("#search_dig").dialog("open");
         });
 
         $("#search_btn2").click(function () {
-            let num = $("#searchValue").val();
-
-            if(num.trim().length == 0){
-                alert("검색할 사번을 입력하세요");
-                // document.getElementById("empno_tx").value ="";
+            let searchType = $("#searchType").val();
+            let searchValue = $("#searchValue").val().trim();
+            if(searchValue.trim().length == 0){
+                alert("값을 입력하세요");
                 $("#searchValue").val("");
                 $("#searchValue").focus();
                 return;
             }
 
-            //대화창의 검색버튼을 클릭했을 때 form을 서버로 보내야 한다.
-            document.frm.submit();
-        });
-
-        $("#search_btn").click(function () {
-            $("#search_dig").dialog("open");
-
             $.ajax({
                 url:"Controller",
                 type:"post",
-                data:{type:"search"}
+                data:{type: "search",
+                    searchType: searchType,
+                    searchValue: searchValue
+                }
 
-            }).done(function (res) {//res는 AllAction이 수행된 후 응답되는 all.jsp에서 반복수행된 tr들
+            }).done(function (res) {
 
                 $("table.table>tbody").html(res)
             });

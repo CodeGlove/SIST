@@ -10,8 +10,30 @@
         insert into emp(empno, ename, job, hiredate)
         values(#{empno}, #{ename}, #{job}, now())
     </insert>
-    <select id="search" parameterType="String">
-        select * from emp
-        where #{id}
+
+    <select id="search" resultType="mybatis.vo.EmpVO" parameterType="map">
+        SELECT * FROM emp
+        <trim prefix="where"> <!-- 동적 쿼리 -->
+            <choose>
+                <when test="searchType != null and searchType == 0">
+                    empno = #{searchValue}
+                </when>
+                <when test="searchType != null and searchType == 1">
+                    ename LIKE CONCAT('%', #{searchValue}, '%')
+                </when>
+                <when test="searchType != null and searchType == 2">
+                    job LIKE CONCAT('%', #{searchValue}, '%')
+                </when>
+                <when test="searchType != null and searchType == 3">
+                    sal LIKE CONCAT('%', #{searchValue}, '%')
+                </when>
+                <when test="searchType != null and searchType == 4">
+                    hiredate LIKE CONCAT('%', #{searchValue}, '%')
+                </when>
+                <when test="searchType != null and searchType == 5">
+                    deptno = #{searchValue}
+                </when>
+            </choose>
+        </trim>
     </select>
 </mapper>

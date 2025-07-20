@@ -1,21 +1,26 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="emp">
     <select id="all" resultType="mybatis.vo.EmpVO">
-        select * from emp
-    </select>
-    <select id="search" parameterType="String" resultType="mybatis.vo.EmpVO">
-            select * from emp
-            where empno = #{no}
-    </select>
-    <select id="search1" resultType="mybatis.vo.EmpVO" parameterType="map">
         SELECT * FROM emp
-        <trim prefix="where"> <!-- 동적 쿼리 -->
+    </select>
+
+    <select id="get_emp" resultType="mybatis.vo.EmpVO"
+    parameterType="String">
+        SELECT * FROM emp
+        WHERE empno = #{no}
+    </select>
+
+    <select id="search" resultType="mybatis.vo.EmpVO"
+    parameterType="Map">
+        SELECT * FROM emp
+        <trim prefix="where">
             <choose>
                 <when test="searchType != null and searchType == 0">
-                    empno = #{searchValue}</when>
+                    empno = #{searchValue}
+                </when>
                 <when test="searchType != null and searchType == 1">
                     ename LIKE CONCAT('%', #{searchValue}, '%')
                 </when>
@@ -26,7 +31,7 @@
                     deptno = #{searchValue}
                 </when>
             </choose>
-
         </trim>
     </select>
+
 </mapper>
