@@ -39,6 +39,7 @@ public class EmpDAO {
         EmpVO[] ar = null;
         List<EmpVO> list = ss.selectList("emp.search", map);
         if (list != null && !list.isEmpty()) {
+            //Db로부터 받은 것이 있다면 배열을 생성한다.
             ar = new EmpVO[list.size()];
             list.toArray(ar);
         }

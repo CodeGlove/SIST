@@ -47,6 +47,7 @@
             <tr>
                 <td colspan="2">
                     <button type="button" id="search_btn2" class="btn">검색</button>
+                    <button type="button" id="search_btn3" class="btn">검색(json)</button>
                 </td>
             </tr>
             </tfoot>
@@ -148,9 +149,52 @@
 
             }).done(function (res) {
 
-                $("table.table>tbody").html(res)
+                $("table.table>tbody").html(res);
+                $("#search_dig").dialog("close");
             });
         });
+
+        $("#search_btn3").click(function () {
+            let searchType = $("#searchType").val();
+            let searchValue = $("#searchValue").val().trim();
+            if(searchValue.trim().length == 0){
+                alert("값을 입력하세요");
+                $("#searchValue").val("");
+                $("#searchValue").focus();
+                return;
+            }
+
+            $.ajax({
+                url:"Controller",
+                type:"post",
+                dataType:"json", //서버에서 응답하는 데이터 형식
+                data:{type: "search2",
+                    searchType: searchType,
+                    searchValue: searchValue
+                }
+
+            }).done(function (res) {
+                console.log(res.items.length);
+                let str = "";
+                for (let i=0; i<res.items.length; i++) {
+                    str += "<tr><td>"
+                    str += res.items[i].empno;
+                    str += "</td><td>";
+                    str += res.items[i].ename;
+                    str += "</td><td>";
+                    str += res.items[i].job;
+                    str += "</td><td>";
+                    str += res.items[i].sal;
+                    str += "</td><td>";
+                    str += res.items[i].hiredate;
+                    str += "</td><td>";
+                    str += res.items[i].deptno;
+                }
+                    $("table.table>tbody").html(str);
+                    $("#search_dig").dialog("close");
+            });
+        });
+
     });
 </script>
 </body>
