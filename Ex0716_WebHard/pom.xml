@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sist</groupId>
-    <artifactId>Ex0722_Bbs_MVC</artifactId>
+    <artifactId>Ex0716_WebHard</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Ex0722_Bbs_MVC</name>
+    <name>Ex0716_WebHard</name>
     <packaging>war</packaging>
 
     <properties>
@@ -36,8 +36,6 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
-
 
         <dependency>
             <groupId>com.mysql</groupId>

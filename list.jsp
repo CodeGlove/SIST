@@ -1,6 +1,8 @@
 <%@ page import="mybatis.vo.BbsVO" %>
 <%@ page import="bbs.util.Paging" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,50 +98,29 @@
     <tr>
       <td colspan="4">
         <ol class="paging">
-<%
-Object obj1 = request.getAttribute("page");
-Paging p = null;
-if(obj1 != null){
-    p = (Paging)obj1;
+        <c:set var="p" value="${requestScope.page}" scope="page"/>
 
-    // 만약 page가 가지고 있는 startPage가 1이면
-    // 이전 기능을 부여하면 안된다.
-    if(p.getStartPage() < p.getPagePerBlock()){
-%>
+    <c:if test="${p.startPage < p.pagePerBlock}">
         <li class="disable">&lt;</li>
-<%
-    }else{
-%>
-          <li><a href="Controller?type=list&cPage=<%=p.getNowPage()-p.getPagePerBlock()%>">&lt;</a></li>
-<%
-    }//if문의 끝
-    int startPage = p.getStartPage();
-    int endPage = p.getEndPage();
-    for(int i = startPage; i<=endPage; i++){
-        if(p.getNowPage() == i){
-%>
-          <li class="now"><%=i%></li>
-<%
-        }else{
-%>
-          <li><a href="Controller?type=list&cPage=<%=i%>"><%=i%></a></li>
-<%
-        }
-    }//for의 끝
+    </c:if>
+<c:if test="${p.startPage >= p.pagePerBlock}">
+          <li><a href="Controller?type=list&cPage=${p.nowPage-p.pagePerBlock}">&lt;</a></li>
+</c:if>
+    <c:forEach begin="${p.startPage}" end="${p.endPage}" varStatus="vs">
+        <c:if test="${p.nowPage == vs.index}">
+          <li class="now">${vs.index}</li>
+        </c:if>
+        <c:if test="${p.nowPage != vs.index}">
+          <li><a href="Controller?type=list&cPage=${vs.index}">${vs.index}</a></li>
+        </c:if>
+    </c:forEach>
 
-    if(p.getEndPage() < p.getTotalPage()){
-%>
-        <li><a href="Controller?type=list&cPage=<%=p.getNowPage()+p.getPagePerBlock()%>">&gt;</a></li>
-<%
-    }else{
-%>
+    <c:if test="${p.endPage < p.totalPage}">
+        <li><a href="Controller?type=list&cPage=${p.nowPage+p.pagePerBlock}">&gt;</a></li>
+    </c:if>
+    <c:if test="${p.endPage >= p.totalPage}">
         <li class="disable">&gt;</li>
-<%
-    }
-  }
-
-
-%>
+    </c:if>
 
 
         </ol>
@@ -151,33 +132,26 @@ if(obj1 != null){
     </tr>
     </tfoot>
     <tbody>
-<%
-  Object obj = request.getAttribute("ar");
-  if(obj != null){
-    BbsVO[] ar = (BbsVO[]) obj;
-    int i = 0;
-    for(BbsVO vo:ar){
-      int num = p.getTotalCount()-((p.getNowPage()-1)*p.getNumPerPage()+i);
-%>
+
+    <c:set var="ar" value="${requestScope.ar}"/>
+    <c:set var="i" value="0"/>
+    <c:forEach items="${ar}" var="vo" varStatus="vs">
+        <c:set var="num" value="${p.totalCount -((p.nowPage-1)*p.numPerPage+vs.index)}"/>
     <tr>
-      <td><%=num%></td>
+      <td>${num}</td>
       <td style="text-align: left">
-        <a href="Controller?type=view&b_idx=<%=vo.getB_idx()%>&cPage=${nowPage}">
-          <%=vo.getSubject()%>
-            <%
-                if(vo.getC_list() != null && vo.getC_list().size() > 0)
-                    out.print("("+vo.getC_list().size()+")");
-            %>
-        </a></td>
-      <td><%=vo.getWriter()%></td>
-      <td><%=vo.getWrite_date()%></td>
-      <td><%=vo.getHit()%></td>
+        <a href="Controller?type=view&b_idx=${vo.b_idx}&cPage=${nowPage}">
+          ${vo.subject}
+        <c:if test="${vo.c_list != null and fn:length(vo.c_list) > 0}">
+            (<c:out value="${fn:length(vo.c_list)}"/>)
+        </c:if>
+        </a>
+      </td>
+      <td>${vo.writer}</td>
+      <td>${vo.write_date}</td>
+      <td>${vo.hit}</td>
     </tr>
-<%
-        i++;//인덱스 값 증가
-    }//for의 끝
-  }
-%>
+</c:forEach>
     </tbody>
   </table>
 

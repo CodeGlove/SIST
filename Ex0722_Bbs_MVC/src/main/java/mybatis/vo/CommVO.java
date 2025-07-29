@@ -1,7 +1,8 @@
 package mybatis.vo;
 
 public class CommVO {
-    private String c_idx, writer, content, pwd, write_date, ip, b_idx;
+    private String c_idx, writer, content,
+            pwd, write_date, ip, b_idx;
 
     public String getC_idx() {
         return c_idx;

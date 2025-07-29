@@ -3,32 +3,35 @@ package bbs.action;
 import bba.dao.BbsDAO;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import mybatis.vo.BbsVO;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 
-public class WriteAction implements Action{
+public class EditAction implements Action{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        // 먼저 요청시 contentType을 얻어낸다.
+        String enc_type = request.getContentType();
 
         String viewPath = null;
+        if(enc_type.startsWith("application")){
+            //view.jsp에서 [수정]버튼을 클릭한 경우 이때는
+            // 수정화면으로 이동해야 함!
+            // 그럼 먼저 수정하고자 하는 게시물을 얻어내야 한다.
+            String b_idx = request.getParameter("b_idx");
+            BbsVO vo = BbsDAO.getBbs(b_idx);
 
-        // list.jsp에 있는 [글쓰기]버튼을 클릭하면 get방식으로
-        //현재 객체를 수행한다. 이때 요청시 contentType을 얻어낸다. 분명
-        // get방식 null값을 받게된다.
-        String enc_type = request.getContentType();
-        //System.out.println(enc_type);
-
-        if(enc_type == null)
-            viewPath = "write.jsp";
-        else if(enc_type.startsWith("multipart")){
-            // 여기는 write.jsp에서 내용을 입력한 후 [보내기] 버튼을
-            // 클릭했을 때 수행하는 곳
-            // 첨부파일을 받아서 bbs_upload라는 폴더에 저장해야 합니다.
-            try{
-                ServletContext application = request.getServletContext();
+            request.setAttribute("vo", vo);
+            viewPath = "edit.jsp";// 여기서 forward되므로 이쪽으로 넘어오는
+            // 파라미터들(b_idx, cPage)은 그대로 유지되어 edit.jsp로 간다.
+        }else if(enc_type.startsWith("multipart")){
+            //edit.jsp에서 값을 수정한 후 DB에 UPDATE를 수행하길 원하는 경우
+            //첨부파일을 처리하기 위해 bbs_upload폴더의 절대경로가 필요하다.
+            ServletContext application = request.getServletContext();
+            try {
                 String realPath = application.getRealPath("/bbs_upload");
 
                 //첨부파일과 다른 파라미터들을 받기위해 MultipartRequest생성
@@ -39,9 +42,11 @@ public class WriteAction implements Action{
 
                 //나머지 파라미터들 얻기(title, writer, content)
                 String title = mr.getParameter("title");
-                String writer = mr.getParameter("writer");
+
                 String content = mr.getParameter("content");
                 String bname = mr.getParameter("bname");
+                String b_idx = mr.getParameter("b_idx");
+                String cPage = mr.getParameter("cPage");
 
                 //첨부파일이 있다면 fname과 oname을 얻어내야 한다.
                 File f = mr.getFile("file");
@@ -53,15 +58,15 @@ public class WriteAction implements Action{
                 }
                 String ip = request.getRemoteAddr();// 요청자의 IP
 
-                //DB에 저장
-                BbsDAO.add(title, writer, content, fname, oname, ip, bname);
-                //viewPath = "Controller?type=list";
+                //DB에 수정
+                BbsDAO.edit(b_idx, title, content, fname, oname, ip);
+
+                viewPath = "Controller?type=view&b_idx="+b_idx+"&cPage="+cPage;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-
-        return viewPath;
+        return  viewPath;
     }
 }
