@@ -62,7 +62,7 @@
                     <!-- 수량 조정 폼 -->
                     <form action="changeCount.jsp" method="post">
                         <input type="hidden" name="p_num"
-                               value="<%=vo.getP_num()%>">
+                               value="<%=vo.getP_num()%>"/>
                         <input type="number" name="count"
                         value="<%=vo.getQuant()%>" min="1"/>
                         <button type="button" onclick="ch(this.form)">

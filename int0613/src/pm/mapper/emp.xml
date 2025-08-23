@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="emp">
+    <!-- 인자인 Map 구조에 searchType 이라는 키의 값이 0이면 "이름 검색",
+            1이라면 "직종 검색", 2라면 "부서 검색" 그리고 검색어는 searchValue 라는
+             키에 저장되어 넘어온다
+             | resultType 반환받아 객체화시킬 자료형 | parameterType 인자
+               받는 값이 하나인가 - String, int (변수명 맘대로) 여러개인가 - 객체 등 (변수명은 객체가 가지는 멤버변수)
+                <if 조건문 <where 내용이 없으면 소멸함 <choose <when 스위치케이스문 -->
+    <select id="search" resultType="pm.vo.EmpVO" parameterType="Map">
+        select * from emp
+        <where>
+            <choose>
+                <when test="searchType == 0"> <!-- 이름검색 -->
+                    ename LIKE CONCAT('%', #{searchValue}, '%')
+                </when>
+                <when test="searchType == 1"> <!-- 직종검색 -->
+                    job LIKE CONCAT('%', #{searchValue}, '%')
+                </when>
+                <when test="searchType == 2"> <!-- 부서검색 -->
+                    deptno = #{searchValue}
+                </when>
+            </choose>
+        </where>
+    </select>
+</mapper>

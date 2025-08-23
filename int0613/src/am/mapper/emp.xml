@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="emp">
+    <select id="all" resultType="am.vo.EmpVO">
+        select * from emp
+    </select>
+
+    <!-- 사원 저장 : vo로 전달 - MyBatis 변수는 vo에 있는 멤버 변수여야 한다 -->
+    <insert id="add" parameterType="am.vo.EmpVO">
+        INSERT INTO emp(empno, ename, job, hiredate)
+        VALUES (#{empno}, #{ename}, #{job}, #{hiredate})
+    </insert>
+
+    <!-- 사원 저장 : Map으로 전달 - MyBatis 변수는 Map에 있는 Key여야 한다 -->
+    <insert id="add2" parameterType="Map">
+        INSERT INTO emp(empno, ename, job, hiredate)
+        VALUES (#{num}, #{name}, #{job}, #{hdate})
+    </insert>
+
+    <!-- 부서 검색
+        변수값은 들어올 때 암시적 형변환하지만 파라미터 타입을 받을 땐 마이 바티스이므로 형변환이 안 되고 맞춰야 함 -->
+    <select id="searchDept" resultType="am.vo.EmpVO" parameterType="int">
+        select * from emp where deptno = #{no}
+    </select>
+
+    <!-- 부서 검색 : 때에 따라 검색어가 안 들어올 때가 있다면 -->
+    <select id="searchDept2" resultType="am.vo.EmpVO" parameterType="Map">
+        select * from emp
+        <if test="no != null"> <!-- 인자인 Map 구조에 no라는 키가 있을때만 where절을 수행하는 비교문이며 형식 고정이다 -->
+            where deptno = #{no}
+        </if>
+    </select>
+
+    <!-- 해당 부서에서 급여가 일정 금액보다 많은 사원들을 검색 -->
+    <select id="searchDept3" resultType="am.vo.EmpVO" parameterType="Map">
+        select * from emp
+        <if test="no != null and sal != null">
+            where deptno = #{no}
+            AND sal >= #{sal}
+        </if>
+    </select>
+
+    <select id="searchDept4" resultType="am.vo.EmpVO" parameterType="Map">
+        select * from emp
+        <if test="no != null">
+            where deptno = #{no}
+            <if test="sal != null">
+                and sal >= #{sal}
+            </if>
+        </if>
+    </select>
+
+    <!-- Map 구조의 Key가 deptno가 있다면 부서코드에 조건을 걸고, 그렇지 않고 job이라는 key가 있다면
+        직종에 조건을 걸어서 결과를 보낸다. -->
+    <select id="search" resultType="am.vo.EmpVO" parameterType="Map">
+        select * from emp
+        <where> <!-- where 요소 안에 문장이 기술되면 where 역할을 수행하지만
+                    문장이 없다면 where 요소는 사라진다 -->
+            <if test="deptno != null">
+                deptno = #{deptno}
+            </if>
+            <if test="job != null">
+                job = #{job}
+            </if>
+        </where>
+    </select>
+</mapper>

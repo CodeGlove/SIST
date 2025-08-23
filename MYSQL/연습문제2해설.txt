@@ -1,0 +1,42 @@
+-- 1.
+SELECT *, sal * IFNULL(comm, 1) FROM emp;
+
+-- 2.
+SELECT empno, ename, job, sal, hiredate FROM emp
+   WHERE sal >= (SELECT sal FROM emp WHERE empno = 7844)
+   AND job = (SELECT job FROM emp WHERE empno = 7521);
+
+-- 3.
+SELECT MAX(sal) FROM emp WHERE job IN( 'CLERK' , 'SALESMAN' );
+
+-- 4.
+SELECT empno, ename, job, sal FROM emp
+WHERE sal > (SELECT sal FROM emp
+            WHERE ename = 'SMITH' AND job = 'CLERK');
+
+-- 5.
+SELECT deptno, COUNT(*) FROM emp GROUP BY deptno;
+
+-- 6.
+SELECT deptno, COUNT(*), SUM(sal) FROM emp
+    GROUP BY deptno
+    HAVING COUNT(*) >= 5;
+
+-- 7. 
+SELECT deptno, COUNT(*), SUM(IFNULL(comm, 0)) FROM emp GROUP BY deptno;
+
+-- 8. 
+SELECT d.deptno, l.city FROM (SELECT * FROM dept WHERE deptno=20) d, locations l
+   WHERE d.loc_code = l.loc_code;
+
+-- 9. 
+SELECT e.empno,e.ename,e.mgr,e2.ename FROM emp e INNER JOIN emp e2
+   ON e.mgr = e2.empno;
+
+-- 10. 
+SELECT e.empno,e.ename,e.job,e.sal,d.dname,l.city FROM (SELECT * FROM emp WHERE job = 'ANALYST') e 
+        INNER JOIN dept d INNER JOIN locations l
+    ON e.deptno = d.deptno AND d.loc_code = l.loc_code;
+
+
+

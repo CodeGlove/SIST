@@ -1,0 +1,14 @@
+package am;
+
+public class Ex2_impl implements Ex2_Inter {
+	
+	int su = 20;
+
+	@Override
+	public int getValue() {
+		// TODO Auto-generated method stub
+		return MAX_VALUE * su;
+	}
+	
+
+}

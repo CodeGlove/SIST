@@ -96,51 +96,49 @@
     <tr>
       <td colspan="4">
         <ol class="paging">
-
 <%
-  Object obj1 = request.getAttribute("page");
-  if(obj1 != null){
-    Paging p = (Paging) obj1;
-    //만약 page가 가지고 있는 startpage가 1이면
-    //이전 기능을 부여하면 안된다.
-    if(p.getStartPage()<p.getPagePerBlock()){
+Object obj1 = request.getAttribute("page");
+Paging p = null;
+if(obj1 != null){
+    p = (Paging)obj1;
+
+    // 만약 page가 가지고 있는 startPage가 1이면
+    // 이전 기능을 부여하면 안된다.
+    if(p.getStartPage() < p.getPagePerBlock()){
 %>
-          <li class="disable">&lt;</li>
-
-          <%
-              }else{
-
+        <li class="disable">&lt;</li>
+<%
+    }else{
 %>
-
           <li><a href="Controller?type=list&cPage=<%=p.getNowPage()-p.getPagePerBlock()%>">&lt;</a></li>
 <%
-  }//if문의 끝
-
-
+    }//if문의 끝
     int startPage = p.getStartPage();
-    int endPge = p.getEndPage();
-    for (int i=p.getStartPage(); i<=endPge; i++){
-
-
-    %>
-
-
-
-
-          <li <% if (p.getNowPage() == i){%>class="now"<%}%>><%=i%></li>
+    int endPage = p.getEndPage();
+    for(int i = startPage; i<=endPage; i++){
+        if(p.getNowPage() == i){
+%>
+          <li class="now"><%=i%></li>
 <%
+        }else{
+%>
+          <li><a href="Controller?type=list&cPage=<%=i%>"><%=i%></a></li>
+<%
+        }
     }//for의 끝
 
     if(p.getEndPage() < p.getTotalPage()){
-      %>
-          <li><a href="Controller?type=list&cPage=<%=p.getNowPage()+p.getPagePerBlock()%>">&gt;</a></li>
-          <%
-              }else{
-      %>
-          <li class="disable">&gt;</li>
-          <%
+%>
+        <li><a href="Controller?type=list&cPage=<%=p.getNowPage()+p.getPagePerBlock()%>">&gt;</a></li>
+<%
+    }else{
+%>
+        <li class="disable">&gt;</li>
+<%
     }
   }
+
+
 %>
 
 
@@ -148,35 +146,42 @@
       </td>
       <td>
         <input type="button" value="글쓰기"
-               onclick="javascript:location.href='Controller?type=write'"/>
+           onclick="javascript:location.href='Controller?type=write'"/>
       </td>
     </tr>
     </tfoot>
     <tbody>
-    <%
-      Object obj = request.getAttribute("ar");
-      if(obj != null){
-        BbsVO[] ar = (BbsVO[]) obj;
-        for(BbsVO vo : ar){
-
-    %>
+<%
+  Object obj = request.getAttribute("ar");
+  if(obj != null){
+    BbsVO[] ar = (BbsVO[]) obj;
+    int i = 0;
+    for(BbsVO vo:ar){
+      int num = p.getTotalCount()-((p.getNowPage()-1)*p.getNumPerPage()+i);
+%>
     <tr>
-      <td><%=vo.getB_idx()%></td>
+      <td><%=num%></td>
       <td style="text-align: left">
-        <a href="#">
+        <a href="Controller?type=view&b_idx=<%=vo.getB_idx()%>&cPage=${nowPage}">
           <%=vo.getSubject()%>
+            <%
+                if(vo.getC_list() != null && vo.getC_list().size() > 0)
+                    out.print("("+vo.getC_list().size()+")");
+            %>
         </a></td>
       <td><%=vo.getWriter()%></td>
       <td><%=vo.getWrite_date()%></td>
       <td><%=vo.getHit()%></td>
     </tr>
-    <%
-      }//for의 끝
-}
-      %>
+<%
+        i++;//인덱스 값 증가
+    }//for의 끝
+  }
+%>
     </tbody>
   </table>
 
 </div>
 </body>
 </html>
+
